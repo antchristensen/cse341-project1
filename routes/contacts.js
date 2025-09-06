@@ -4,7 +4,7 @@ const router = express.Router();
 const { ObjectId } = require('mongodb');
 const { getDb } = require('../db/connection');
 
-// GET /contacts → all contacts
+// GET /contacts 
 router.get('/', async (_req, res) => {
   console.log('HIT: GET /contacts');
   try {
@@ -17,7 +17,7 @@ router.get('/', async (_req, res) => {
   }
 });
 
-// GET /contacts/:id → one contact by ObjectId
+// GET /contacts/:id 
 router.get('/:id', async (req, res) => {
   console.log('HIT: GET /contacts/:id', req.params.id);
   try {
