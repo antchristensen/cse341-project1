@@ -1,0 +1,6 @@
+### GET all contacts
+GET http://localhost:3000/contacts
+
+### GET one contact by id
+# Replace with a real _id from the previous response
+GET http://localhost:3000/contacts/68bb8dea34f5b6e3ec5f3d10
