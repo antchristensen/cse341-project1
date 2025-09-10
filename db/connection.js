@@ -16,7 +16,7 @@ async function connectToDb() {
   await client.connect();
   const dbName = process.env.DB_NAME || 'cse341-project1';
   _db = client.db(dbName);
-  console.log(`✅ MongoDB connected: ${dbName}`);
+  console.log(`MongoDB connected: ${dbName}`);
   return _db;
 }
 

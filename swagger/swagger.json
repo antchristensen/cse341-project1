@@ -1,0 +1,149 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contacts API",
+    "version": "1.0.0",
+    "description": "API for storing and retrieving contacts for CSE 341."
+  },
+  "servers": [
+    { "url": "http://localhost:3000", "description": "Local server" },
+    { "url": "https://cse341-project1-lg5n.onrender.com", "description": "Render deployment" }
+  ],
+  "paths": {
+    "/contacts": {
+      "get": {
+        "summary": "Get all contacts",
+        "tags": ["Contacts"],
+        "responses": {
+          "200": {
+            "description": "Array of contacts",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Contact" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new contact",
+        "tags": ["Contacts"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/ContactInput" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contact created",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/IdResponse" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" }
+        }
+      }
+    },
+    "/contacts/{id}": {
+      "get": {
+        "summary": "Get contact by id",
+        "tags": ["Contacts"],
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "responses": {
+          "200": {
+            "description": "Contact",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Contact" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "summary": "Update contact by id",
+        "tags": ["Contacts"],
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/ContactInput" } }
+          }
+        },
+        "responses": {
+          "204": { "description": "Updated successfully" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "summary": "Delete contact by id",
+        "tags": ["Contacts"],
+        "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+        "responses": {
+          "204": { "description": "Deleted successfully" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string", "example": "64f0a3f0e4d2c8f5b1a23d45" },
+          "firstName": { "type": "string", "example": "Anthony" },
+          "lastName": { "type": "string", "example": "Christesen" },
+          "email": { "type": "string", "format": "email", "example": "anthony@example.com" },
+          "favoriteColor": { "type": "string", "example": "Green" },
+          "birthday": { "type": "string", "example": "1989-04-16" }
+        }
+      },
+      "ContactInput": {
+        "type": "object",
+        "properties": {
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "email": { "type": "string" },
+          "favoriteColor": { "type": "string" },
+          "birthday": { "type": "string" }
+        },
+        "required": ["firstName", "lastName", "email", "favoriteColor", "birthday"]
+      },
+      "IdResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "64f0a3f0e4d2c8f5b1a23d45" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string", "example": "Contact not found" }
+        }
+      }
+    },
+    "parameters": {
+      "IdParam": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "example": "64f0a3f0e4d2c8f5b1a23d45" }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      }
+    }
+  },
+  "tags": [{ "name": "Contacts" }]
+}
