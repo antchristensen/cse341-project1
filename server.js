@@ -1,12 +1,16 @@
 // server.js
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors'); // Enable CORS
 const { connectToDb } = require('./db/connection');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger/swagger.json');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Parse JSON & form bodies
 app.use(express.json());
@@ -49,4 +53,3 @@ connectToDb()
     console.error('Failed to connect to MongoDB:', err);
     process.exit(1);
   });
-

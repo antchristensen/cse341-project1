@@ -6,6 +6,7 @@
     "description": "API for storing and retrieving contacts for CSE 341."
   },
   "servers": [
+    { "url": "/", "description": "Same origin" },
     { "url": "http://localhost:3000", "description": "Local server" },
     { "url": "https://cse341-project1-lg5n.onrender.com", "description": "Render deployment" }
   ],
